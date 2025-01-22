@@ -2,3 +2,4 @@
 
 TESTS := $(ROOT)/tests/example
 TESTS += $(ROOT)/tests/hyp-xen-version
+TESTS += $(ROOT)/tests/arm-hypercall-fuzzer
