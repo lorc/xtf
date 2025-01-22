@@ -1,6 +1,6 @@
 # Architecture independent/common configuration
 
-ALL_CATEGORIES := special functional xsa utility in-development
+ALL_CATEGORIES := special functional xsa utility in-development fuzzer
 COMMON_FLAGS := -pipe -I$(ROOT)/include -MMD -MP
 
 cc-option = $(shell if [ -z "`echo 'int p=1;' | $(CC) $(1) -S -o /dev/null -x c - 2>&1`" ]; \
