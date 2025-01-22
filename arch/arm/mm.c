@@ -38,7 +38,17 @@ void *set_fixmap(uint8_t slot, paddr_t pa, uint64_t flags)
     index = L3_TABLE_INDEX(FIXMAP_ADDR(slot));
     store_pgt_entry(&fix_pgtable[index], ((pa & ~(L3_TABLE_SIZE - 1)) | flags));
 
-    return (void *)(FIXMAP_ADDR(slot) + (pa & PAGE_OFFSET));
+    return get_fixmap(slot, pa);
+#else
+    return (void *)(vaddr_t)pa;
+#endif
+}
+
+/* Retrieve VA from  a fixmap entry */
+void *get_fixmap(uint8_t slot, paddr_t pa)
+{
+#ifdef CONFIG_MMU
+   return (void *)(FIXMAP_ADDR(slot) + (pa & PAGE_OFFSET));
 #else
     return (void *)(vaddr_t)pa;
 #endif

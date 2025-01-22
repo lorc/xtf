@@ -114,6 +114,7 @@ extern paddr_t phys_offset;
 
 void store_pgt_entry(lpae_t *addr, lpae_t val);
 void *set_fixmap(uint8_t slot, paddr_t pa, uint64_t flags);
+void *get_fixmap(uint8_t slot, paddr_t pa);
 void setup_mm(paddr_t boot_phys_offset);
 
 #endif /* __ASSEMBLY__ */
