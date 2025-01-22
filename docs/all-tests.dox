@@ -182,4 +182,9 @@ states.
 @subpage test-nested-svm - Nested SVM tests.
 
 @subpage test-nested-vmx - Nested VT-x tests.
+
+@section index-fuzzing Fuzzing harnesses
+
+@subpage test-arm-hypercall-fuzzer - LibAFL hypercall fuzzer
+
 */
