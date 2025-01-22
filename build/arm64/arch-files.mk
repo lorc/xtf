@@ -16,3 +16,6 @@ obj-perenv += $(ROOT)/arch/arm/time.o
 ifeq ($(CONFIG_SBSA_UART), y)
 obj-perenv += $(ROOT)/arch/arm/sbsa_uart.o
 endif
+ifeq ($(CONFIG_LIBAFL), y)
+obj-perenv += $(ROOT)/arch/arm/arm64/libafl.o
+endif
