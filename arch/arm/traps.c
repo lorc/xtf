@@ -7,6 +7,7 @@
 #include <arch/regs.h>
 #include <arch/system.h>
 #include <arch/gic.h>
+#include <afl/libafl_qemu.h>
 
 #ifdef CONFIG_ARM_64
 static void show_registers64(struct cpu_regs *regs)
@@ -77,6 +78,10 @@ void do_bad_mode(struct cpu_regs *regs)
  */
 void do_trap_sync(struct cpu_regs *regs)
 {
+#ifdef CONFIG_LIBAFL
+    /* We consider test was success if Xen tries to kill us */
+    libafl_qemu_end(LIBAFL_QEMU_END_OK);
+#endif
     printk("---Trap sync---\n");
     show_registers(regs);
     panic("Trap sync\n");
