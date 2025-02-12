@@ -187,4 +187,5 @@ states.
 
 @subpage test-arm-hypercall-fuzzer - LibAFL hypercall fuzzer
 
+@subpage test-arm-vgic-fuzzer - vGIC MMIO fuzzer
 */
