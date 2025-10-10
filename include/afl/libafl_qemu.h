@@ -51,4 +51,6 @@ void libafl_qemu_trace_vaddr_range(libafl_word start, libafl_word end);
 
 void libafl_qemu_trace_vaddr_size(libafl_word start, libafl_word size);
 
+
+libafl_word libafl_qemu_xencov(void *buf_vaddr, libafl_word max_len);
 #endif

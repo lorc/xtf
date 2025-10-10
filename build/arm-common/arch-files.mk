@@ -1,6 +1,7 @@
 # Common files compiled and linked for arm
 
 obj-perbits += $(ROOT)/common/console.o
+obj-perbits += $(ROOT)/common/cov.o
 obj-perbits += $(ROOT)/common/lib.o
 obj-perbits += $(ROOT)/common/libc/stdio.o
 obj-perbits += $(ROOT)/common/libc/string.o

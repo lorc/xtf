@@ -9,6 +9,7 @@
  * @see tests/arm-hypercall-fuzzer/main.c
  */
 #include <xtf.h>
+#include <xtf/coverage.h>
 #include <afl/libafl_qemu.h>
 #define BUF_SIZE 4096
 
@@ -441,6 +442,9 @@ static void fuzz_hypercalls(char *buf, unsigned int len)
 void test_main(void)
 {
     uint64_t buf_size;
+    int64_t cov_size;
+    void *cov_ptr;
+
 
     lqprintf("LibAFL, hello from XTF-based test harness!\n");
 
@@ -448,6 +452,15 @@ void test_main(void)
 
     buf_size = libafl_qemu_start_virt(data, BUF_SIZE);
     fuzz_hypercalls(data, buf_size);
+
+    cov_ptr = coverage_get(&cov_size);
+    if (cov_ptr) {
+        libafl_qemu_xencov(cov_ptr, cov_size);
+    }
+    else{
+        lqprintf("Failed to get XEN coverage data\n");
+    }
+
     libafl_qemu_end(LIBAFL_QEMU_END_OK);
 }
 

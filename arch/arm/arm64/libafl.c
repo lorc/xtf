@@ -80,6 +80,12 @@ libafl_word libafl_qemu_input_phys(void       *buf_paddr,
                                  (libafl_word)buf_paddr, max_len);
 }
 
+libafl_word libafl_qemu_xencov(void *buf_vaddr, libafl_word max_len)
+{
+  return _libafl_sync_exit_call2(LIBAFL_QEMU_COMMAND_XENCOV_DATA,
+                                 (libafl_word)buf_vaddr, max_len);
+}
+
 void libafl_qemu_end(enum LibaflQemuEndStatus status) {
   _libafl_sync_exit_call1(LIBAFL_QEMU_COMMAND_END, status);
 }

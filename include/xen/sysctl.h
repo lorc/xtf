@@ -187,11 +187,52 @@ struct xen_sysctl_livepatch_op {
 };
 typedef struct xen_sysctl_livepatch_op xen_sysctl_livepatch_op_t;
 
+
+/*
+ * Output format of gcov data:
+ *
+ * XEN_GCOV_FORMAT_MAGIC XEN_GCOV_RECORD ... XEN_GCOV_RECORD
+ *
+ * That is, one magic number followed by 0 or more record.
+ *
+ * The magic number is stored as an uint32_t field.
+ *
+ * The record is packed and variable in length. It has the form:
+ *
+ *  filename: a NULL terminated path name extracted from gcov, used to
+ *            create the name of gcda file.
+ *  size:     a uint32_t field indicating the size of the payload, the
+ *            unit is byte.
+ *  payload:  the actual payload, length is `size' bytes.
+ *
+ * Userspace tool will split the record to different files.
+ */
+
+#define XEN_GCOV_FORMAT_MAGIC    0x58434f56 /* XCOV */
+
+/*
+ * Ouput format of LLVM coverage data is just a raw stream, as would be
+ * written by the compiler_rt run time library into a .profraw file. There
+ * are no special Xen tags or delimiters because none are needed.
+ */
+
+#define XEN_SYSCTL_COVERAGE_get_size 0 /* Get total size of output data */
+#define XEN_SYSCTL_COVERAGE_read     1 /* Read output data */
+#define XEN_SYSCTL_COVERAGE_reset    2 /* Reset all counters */
+
+struct xen_sysctl_coverage_op {
+    uint32_t cmd;
+    uint32_t size; /* IN/OUT: size of the buffer  */
+    guest_handle_64_t buffer; /* OUT */
+};
+
 struct xen_sysctl {
     uint32_t cmd;
+#define XEN_SYSCTL_coverage_op                   20
 #define XEN_SYSCTL_livepatch_op                  27
     uint32_t interface_version; /* XEN_SYSCTL_INTERFACE_VERSION */
     union {
+        struct xen_sysctl_coverage_op       coverage_op;
         struct xen_sysctl_livepatch_op      livepatch;
         uint8_t                             pad[128];
     } u;
